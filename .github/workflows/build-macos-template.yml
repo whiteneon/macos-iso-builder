@@ -18,31 +18,7 @@ jobs:
     steps:
       - name: Preflight
         run: |
-          # Third time's the charm
-          if [ "$GITHUB_RUN_ATTEMPT" -ge 3 ] || [ "$GITHUB_RUN_NUMBER" -ge 3 ]; then
-            exit 0
-          fi
-
-          # Most users arrive directly at the Actions tab without reading the README
-          # This ensures they have visited the README and helps with discoverability
-          # Also, make sure they check out the prebuilt image in the Recent Forks list
-          FOUND=false
-          PAGE=1
-          while [ $PAGE -le 50 ]; do
-            DATA=$(curl -s \
-              -H "Accept: application/vnd.github+json" \
-              "https://api.github.com/repos/LongQT-sea/macos-iso-builder/stargazers?per_page=100&page=${PAGE}")
-            echo "$DATA" | grep -qi "\"login\".*\"$GITHUB_ACTOR\"" && FOUND=true && break
-            [ "$(echo "$DATA" | grep -c '"login"')" -lt 100 ] && break
-            PAGE=$((PAGE + 1))
-          done
-          if [ "$FOUND" = "false" ]; then
-            echo "Looks like you forgot to read the first step in the README ? :thinking:" >> $GITHUB_STEP_SUMMARY
-            echo "Star [the repo](https://github.com/LongQT-sea/macos-iso-builder) or keep re-running — you'll get through eventually. :wink:" >> $GITHUB_STEP_SUMMARY
-            echo "Head over to https://github.com/LongQT-sea/macos-iso-builder to drop a star. :star:" >> $GITHUB_STEP_SUMMARY
-            echo "<br>![star](https://raw.githubusercontent.com/LongQT-sea/macos-iso-builder/main/.github/star.jpg)" >> $GITHUB_STEP_SUMMARY
-            exit 1
-          fi
+          echo "Disabled non-sense!" >> $GITHUB_STEP_SUMMARY
 
       - name: Checkout repository
         uses: actions/checkout@v6
